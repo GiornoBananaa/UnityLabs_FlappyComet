@@ -1,20 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
-public class CometDeath : ICollisionListener
+namespace CometSystem
 {
-    private CollisionDetector _collisionDetector;
-
-    public CometDeath(CollisionDetector collisionDetector, LayerMask deathLayer, LayerMask pointLayer)
+    public class CometDeath : ICollisionListener
     {
-        _collisionDetector = collisionDetector;
-        _collisionDetector.Subscribe(this, deathLayer);
-    }
+        private readonly CollisionDetector _collisionDetector;
+        private readonly Game _game;
 
-    public void CollisionEnter(Collision other)
-    {
-        
+        public CometDeath(CollisionDetector collisionDetector, Game game, CometDataSO cometData)
+        {
+            _collisionDetector = collisionDetector;
+            _collisionDetector.Subscribe(this, cometData.DeathLayers);
+            _game = game;
+        }
+
+        public void CollisionEnter(Collision2D other)
+        {
+            _game.Restart();
+        }
     }
 }
- 

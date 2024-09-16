@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public interface ICollisionListener
+namespace CometSystem
 {
-    void CollisionEnter(Collision other);
+    public interface ICollisionListener
+    {
+        void CollisionEnter(Collision2D other);
+    }
 }

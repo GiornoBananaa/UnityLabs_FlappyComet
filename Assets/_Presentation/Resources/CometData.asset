@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: CometData
   m_EditorClassIdentifier: 
   <XSpeed>k__BackingField: 5
-  <YAcceliration>k__BackingField: 14
+  <YAcceleration>k__BackingField: 12
   <YMaxVelocity>k__BackingField: 5
   <DeathLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   <PointLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128

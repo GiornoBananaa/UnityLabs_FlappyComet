@@ -1,34 +1,36 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
-public class CollisionDetector : MonoBehaviour
+namespace CometSystem
 {
-    private readonly Dictionary<ICollisionListener, LayerMask> _collisionListener = new();
-
-    public void Subscribe(ICollisionListener listener, LayerMask layerMask)
+    public class CollisionDetector : MonoBehaviour
     {
-        _collisionListener.Add(listener, layerMask);
-    }
+        private readonly Dictionary<ICollisionListener, LayerMask> _collisionListener = new();
 
-    public void Subscribe(ICollisionListener listener)
-    {
-        _collisionListener.Add(listener, Physics.AllLayers);
-    }
-
-    public void UnSubscribe(ICollisionListener listener)
-    {
-        _collisionListener.Remove(listener);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        foreach (var listener in _collisionListener)
+        public void Subscribe(ICollisionListener listener, LayerMask layerMask)
         {
-            if (listener.Value.Contains(other.gameObject.layer))
+            _collisionListener.Add(listener, layerMask);
+        }
+
+        public void Subscribe(ICollisionListener listener)
+        {
+            _collisionListener.Add(listener, Physics.AllLayers);
+        }
+
+        public void UnSubscribe(ICollisionListener listener)
+        {
+            _collisionListener.Remove(listener);
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            foreach (var listener in _collisionListener)
             {
-                listener.Key.CollisionEnter(other);
+                if (listener.Value.Contains(other.gameObject.layer))
+                {
+                    listener.Key.CollisionEnter(other);
+                }
             }
         }
     }

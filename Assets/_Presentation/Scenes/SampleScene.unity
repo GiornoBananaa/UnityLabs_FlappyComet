@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -184,7 +185,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 1
 --- !u!58 &474930170
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -482,7 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputListener: {fileID: 928923656}
   _cameraMovement: {fileID: 519420033}
-  _collisionDetector: {fileID: 0}
+  _collisionDetector: {fileID: 474930172}
   _comet: {fileID: 474930169}
 --- !u!1 &1443414595
 GameObject:
@@ -641,7 +642,7 @@ GameObject:
   - component: {fileID: 1488995341}
   - component: {fileID: 1488995340}
   - component: {fileID: 1488995339}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,7 +800,7 @@ GameObject:
   - component: {fileID: 1675860781}
   - component: {fileID: 1675860780}
   - component: {fileID: 1675860779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}

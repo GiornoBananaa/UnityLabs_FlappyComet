@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7cef084e0c647a8a8920bd9f18402fc, type: 3}
+  m_Name: ObstacleData
+  m_EditorClassIdentifier: 
+  <Prefab>k__BackingField: {fileID: 7216605518712167195, guid: 5ceb734d036b7574c8f90c1e0d0e7631, type: 3}
+  <MovementPresets>k__BackingField:
+  - <Path>k__BackingField:
+    - {x: 0, y: 3, z: 0}
+    - {x: 0, y: -3, z: 0}
+    <Speed>k__BackingField: 3
+    <SpawnPriority>k__BackingField: 2
+  - <Path>k__BackingField:
+    - {x: 3, y: 3, z: 0}
+    - {x: 3, y: -3, z: 0}
+    - {x: 0, y: 0, z: 0}
+    <Speed>k__BackingField: 4
+    <SpawnPriority>k__BackingField: 1

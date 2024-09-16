@@ -1,66 +1,70 @@
-﻿using UnityEngine;
+﻿using CometSystem;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class InputListener : MonoBehaviour
+namespace InputSystem
 {
-    private GameInputActions _gameInput;
-    private Camera _camera;
-    private CometMovement _cometMovement;
-    private bool _liftComet;
-
-    [Inject]
-    public void Construct(CometMovement cometMovement)
+    public class InputListener : MonoBehaviour
     {
-        _cometMovement = cometMovement;
-    }
+        private GameInputActions _gameInput;
+        private Camera _camera;
+        private CometMovement _cometMovement;
+        private bool _liftComet;
 
-    private void Awake()
-    {
-        _gameInput = new GameInputActions();
-        _gameInput.Enable();
-        EnableInput();
-        _camera = Camera.main;
-    }
+        [Inject]
+        public void Construct(CometMovement cometMovement)
+        {
+            _cometMovement = cometMovement;
+        }
 
-    private void FixedUpdate()
-    {
-        if (_liftComet)
-            LiftComet();
-    }
+        private void Awake()
+        {
+            _gameInput = new GameInputActions();
+            _gameInput.Enable();
+            EnableInput();
+            _camera = Camera.main;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_liftComet)
+                LiftComet();
+        }
 
 
-    private void OnDestroy()
-    {
-        DisableInput();
-    }
+        private void OnDestroy()
+        {
+            DisableInput();
+        }
 
-    public void EnableInput()
-    {
-        _gameInput.GlobalActionMap.LiftComet.started += StartLiftingComet;
-        _gameInput.GlobalActionMap.LiftComet.canceled += EndLiftingComet;
-        _gameInput.Enable();
-    }
+        public void EnableInput()
+        {
+            _gameInput.GlobalActionMap.LiftComet.started += StartLiftingComet;
+            _gameInput.GlobalActionMap.LiftComet.canceled += EndLiftingComet;
+            _gameInput.Enable();
+        }
 
-    public void DisableInput()
-    {
-        _gameInput.GlobalActionMap.LiftComet.started -= StartLiftingComet;
-        _gameInput.GlobalActionMap.LiftComet.canceled -= EndLiftingComet;
-        _gameInput.Disable();
-    }
+        public void DisableInput()
+        {
+            _gameInput.GlobalActionMap.LiftComet.started -= StartLiftingComet;
+            _gameInput.GlobalActionMap.LiftComet.canceled -= EndLiftingComet;
+            _gameInput.Disable();
+        }
 
-    private void StartLiftingComet(InputAction.CallbackContext callbackContext)
-    {
-        _liftComet = true;
-    }
+        private void StartLiftingComet(InputAction.CallbackContext callbackContext)
+        {
+            _liftComet = true;
+        }
 
-    private void EndLiftingComet(InputAction.CallbackContext callbackContext)
-    {
-        _liftComet = false;
-    }
+        private void EndLiftingComet(InputAction.CallbackContext callbackContext)
+        {
+            _liftComet = false;
+        }
 
-    private void LiftComet()
-    {
-        _cometMovement.LiftComet();
+        private void LiftComet()
+        {
+            _cometMovement.LiftComet();
+        }
     }
 }
