@@ -1,9 +1,5 @@
-﻿using DG.Tweening;
-using ModestTree;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
 using Zenject;
 
 namespace CometSystem
@@ -14,7 +10,7 @@ namespace CometSystem
         private readonly TriggerDetector _triggerDetector;
         private readonly Transform _cometTransform;
         private readonly float _suckForce;
-
+        
         public PointSucker(TriggerDetector triggerDetector, CometDataSO cometData)
         {
             _triggerDetector = triggerDetector;
@@ -23,24 +19,24 @@ namespace CometSystem
             _points = new List<(Transform, float)>();
             _suckForce = cometData.PointSuckForce;
         }
-
+        
         public void Tick()
         {
             SuckPoint();
         }
-
+        
         public void TriggerEnter(Collider2D other)
         {
-            _points.Add((other.attachedRigidbody.transform, 0));
+            _points.Add((other.transform, 0));
         }
-
-        public void SuckPoint()
+        
+        private void SuckPoint()
         {
             for (int i = 0; i < _points.Count; i++)
             {
-                (Transform transform, float time)  = _points[i];
+                (Transform transform, float time) = _points[i];
                 if (!transform.gameObject.activeSelf)
-                { 
+                {
                     _points.Remove((transform, time));
                     i--;
                     continue;

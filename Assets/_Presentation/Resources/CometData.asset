@@ -15,7 +15,7 @@ MonoBehaviour:
   <XSpeed>k__BackingField: 5
   <YAcceleration>k__BackingField: 12
   <YMaxVelocity>k__BackingField: 5
-  <PointSuckForce>k__BackingField: 0.01
+  <PointSuckForce>k__BackingField: 1
   <DeathLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
