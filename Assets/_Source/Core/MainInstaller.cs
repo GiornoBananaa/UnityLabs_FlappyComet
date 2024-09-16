@@ -20,6 +20,7 @@ namespace Core
         [SerializeField] private CameraMovement _cameraMovement;
         [SerializeField] private CollisionDetector _collisionDetector;
         [SerializeField] private Rigidbody2D _comet;
+        [SerializeField] private PointView _pointView;
 
         public override void InstallBindings()
         {
@@ -50,6 +51,9 @@ namespace Core
             
             //Point
             Container.Bind<IFactory<Point>>().To<PointFactory>().AsSingle();
+            Container.Bind<PointView>().FromInstance(_pointView).AsSingle();
+            Container.Bind<PointCollector>().AsSingle().NonLazy();
+            Container.Bind<PointContainer>().AsSingle();
             
             //Generation
             Container.Bind<GameObjectGenerator<Obstacle>>().AsSingle().NonLazy();
