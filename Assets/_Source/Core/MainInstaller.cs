@@ -5,10 +5,51 @@ using InputSystem;
 using ObstacleSystem;
 using PointSystem;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 using Zenject;
+using ITickable = Zenject.ITickable;
 
 namespace Core
 {
+    public class GameLifetimeScope : LifetimeScope
+    {
+        protected override void Configure(IContainerBuilder builder)
+        {
+            builder.RegisterEntryPoint<ActorPresenter>();
+            //Comet
+            builder.Register<ITickable, PointSucker>(Lifetime.Singleton);
+            
+            //Point
+            builder.Register<PointCollector>(Lifetime.Singleton);
+            //builder.Register<PointContainer>(Lifetime.Singleton);
+            
+            //Generation
+            builder.Register<GameObjectGenerator<Obstacle>>(Lifetime.Singleton);
+            builder.Register<GameObjectGenerator<Point>>(Lifetime.Singleton);
+        }
+    }
+    
+    public class ActorPresenter : IStartable
+    {
+        readonly PointSucker service;
+        readonly PointCollector actorsView;
+        readonly IEnumerable<GameObjectGenerator<T>> _actorsView;
+
+        public ActorPresenter(
+            CharacterService service,
+            ActorsView actorsView)
+        {
+            this.service = service;
+            this.actorsView = actorsView;
+        }
+
+        void IStartable.Start()
+        {
+            // Scheduled at Start () on VContainer's own PlayerLoopSystem.
+        }
+    }
+    
     public class MainInstaller : MonoInstaller
     {
         private const string COMET_DATA_PATH = "CometData";
