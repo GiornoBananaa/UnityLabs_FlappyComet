@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 474930170}
   - component: {fileID: 474930169}
   - component: {fileID: 474930172}
+  - component: {fileID: 474930173}
   m_Layer: 0
   m_Name: Comet
   m_TagString: Untagged
@@ -282,6 +283,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 289058fffcd4ff943a43150fa42892f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &474930173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474930167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281e7397505d68a46a5d3ef67ec1556d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028
@@ -685,8 +698,9 @@ MonoBehaviour:
   _inputListener: {fileID: 928923656}
   _cameraMovement: {fileID: 519420033}
   _collisionDetector: {fileID: 474930172}
+  _triggerDetector: {fileID: 474930173}
   _comet: {fileID: 474930169}
-  _pointView: {fileID: 0}
+  _pointView: {fileID: 1999982909}
 --- !u!1 &1443414595
 GameObject:
   m_ObjectHideFlags: 0

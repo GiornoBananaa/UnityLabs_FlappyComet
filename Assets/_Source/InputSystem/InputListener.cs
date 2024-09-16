@@ -8,7 +8,6 @@ namespace InputSystem
     public class InputListener : MonoBehaviour
     {
         private GameInputActions _gameInput;
-        private Camera _camera;
         private CometMovement _cometMovement;
         private bool _liftComet;
 
@@ -21,9 +20,7 @@ namespace InputSystem
         private void Awake()
         {
             _gameInput = new GameInputActions();
-            _gameInput.Enable();
             EnableInput();
-            _camera = Camera.main;
         }
 
         private void FixedUpdate()

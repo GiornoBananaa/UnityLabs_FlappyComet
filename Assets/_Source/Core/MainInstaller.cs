@@ -19,6 +19,7 @@ namespace Core
         [SerializeField] private InputListener _inputListener;
         [SerializeField] private CameraMovement _cameraMovement;
         [SerializeField] private CollisionDetector _collisionDetector;
+        [SerializeField] private TriggerDetector _triggerDetector;
         [SerializeField] private Rigidbody2D _comet;
         [SerializeField] private PointView _pointView;
 
@@ -44,7 +45,9 @@ namespace Core
             Container.Bind<CometMovement>().AsSingle().WithArguments(_comet);
             Container.Bind<CameraMovement>().FromInstance(_cameraMovement).AsSingle();
             Container.Bind<CollisionDetector>().FromInstance(_collisionDetector).AsSingle();
+            Container.Bind<TriggerDetector>().FromInstance(_triggerDetector).AsSingle();
             Container.Bind<CometDeath>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PointSucker>().AsSingle().NonLazy();
             
             //Obstacle
             Container.Bind<IFactory<Obstacle>>().To<ObstacleFactory>().AsSingle();

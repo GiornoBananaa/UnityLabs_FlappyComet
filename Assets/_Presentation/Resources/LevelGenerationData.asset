@@ -18,6 +18,6 @@ MonoBehaviour:
     <SpawnTimeGapSpread>k__BackingField: 1
     <LifeTime>k__BackingField: 6
   - _levelObject: 2
-    <SpawnTimeGap>k__BackingField: 6
+    <SpawnTimeGap>k__BackingField: 1
     <SpawnTimeGapSpread>k__BackingField: 1
     <LifeTime>k__BackingField: 6

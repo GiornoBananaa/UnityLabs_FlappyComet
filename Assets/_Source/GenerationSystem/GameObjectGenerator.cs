@@ -41,6 +41,11 @@ namespace GenerationSystem
         private void Generate()
         {
             T obj = _objectPool.Get();
+            if(obj==null || obj.transform == null || _spawnPosition == null)
+            { 
+                _objectPool.Clear();
+                return;
+            }
             obj.transform.position = (Vector2)_spawnPosition.position + SPAWN_OFFSET;
             obj.gameObject.SetActive(true);
             ReleaseObject(obj);
@@ -49,6 +54,8 @@ namespace GenerationSystem
         private async UniTask ReleaseObject(T obj)
         {
             await UniTask.Delay((int)(_lifeTime * 1000));
+            if (obj == null)
+                return;
             obj.gameObject.SetActive(false);
             _objectPool.Release(obj);
         }
