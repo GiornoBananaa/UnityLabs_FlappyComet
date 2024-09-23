@@ -4,52 +4,41 @@ using GenerationSystem;
 using InputSystem;
 using ObstacleSystem;
 using PointSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using Zenject;
-using ITickable = Zenject.ITickable;
 
 namespace Core
 {
-    public class GameLifetimeScope : LifetimeScope
-    {
-        protected override void Configure(IContainerBuilder builder)
-        {
-            builder.RegisterEntryPoint<ActorPresenter>();
-            //Comet
-            builder.Register<ITickable, PointSucker>(Lifetime.Singleton);
-            
-            //Point
-            builder.Register<PointCollector>(Lifetime.Singleton);
-            //builder.Register<PointContainer>(Lifetime.Singleton);
-            
-            //Generation
-            builder.Register<GameObjectGenerator<Obstacle>>(Lifetime.Singleton);
-            builder.Register<GameObjectGenerator<Point>>(Lifetime.Singleton);
-        }
-    }
-    
     public class ActorPresenter : IStartable
     {
-        readonly PointSucker service;
-        readonly PointCollector actorsView;
-        readonly IEnumerable<GameObjectGenerator<T>> _actorsView;
+        readonly PointSucker _pointSucker;
+        readonly PointCollector _pointCollector;
+        readonly CometDeath _cometDeath;
+        readonly IEnumerable<IObjectGenerator> _objectGenerators;
 
         public ActorPresenter(
-            CharacterService service,
-            ActorsView actorsView)
+            PointCollector pointCollector,
+            PointSucker pointSucker,
+            CometDeath cometDeath,
+            IEnumerable<IObjectGenerator> objectGenerators)
         {
-            this.service = service;
-            this.actorsView = actorsView;
+            _pointCollector = pointCollector;
+            _pointSucker = pointSucker;
+            _objectGenerators = objectGenerators;
+            _cometDeath = cometDeath;
         }
 
         void IStartable.Start()
         {
-            // Scheduled at Start () on VContainer's own PlayerLoopSystem.
+            foreach (IObjectGenerator objectGenerator in _objectGenerators)
+            {
+                objectGenerator.EnableGeneration();
+            }
         }
     }
-    
+    /*
     public class MainInstaller : MonoInstaller
     {
         private const string COMET_DATA_PATH = "CometData";
@@ -103,5 +92,5 @@ namespace Core
             Container.Bind<GameObjectGenerator<Obstacle>>().AsSingle().NonLazy();
             Container.Bind<GameObjectGenerator<Point>>().AsSingle().NonLazy();
         }
-    }
+    }*/
 }

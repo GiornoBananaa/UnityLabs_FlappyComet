@@ -1,6 +1,6 @@
 using CometSystem;
 using UnityEngine;
-using Zenject;
+using VContainer;
 
 namespace CameraSystem
 {

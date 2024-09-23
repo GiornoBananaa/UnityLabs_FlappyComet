@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using VContainer.Unity;
 
 namespace CometSystem
 {

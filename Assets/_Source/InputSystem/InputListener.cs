@@ -1,7 +1,7 @@
 ﻿using CometSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
+using VContainer;
 
 namespace InputSystem
 {

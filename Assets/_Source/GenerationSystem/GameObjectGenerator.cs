@@ -1,11 +1,18 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Pool;
-using Zenject;
+using VContainer;
+using Core;
 
 namespace GenerationSystem
 {
-    public class GameObjectGenerator<T> where T : MonoBehaviour
+    public interface IObjectGenerator
+    {
+        void EnableGeneration();
+        void DisableGeneration();
+    }
+
+    public class GameObjectGenerator<T> : IObjectGenerator where T : MonoBehaviour
     {
         private readonly Vector2 SPAWN_OFFSET = new (10, 0);
         private readonly ObjectPool<T> _objectPool;
@@ -14,7 +21,8 @@ namespace GenerationSystem
         private readonly float _spawnTimeGap;
         private readonly float _spawnTimeGapSpread;
         private readonly float _lifeTime;
-        
+        private UniTask _generationTask;
+
         public GameObjectGenerator(IFactory<T> factory, LevelGenerationDataSO levelGenerationData)
         {
             _factory = factory;
@@ -25,9 +33,19 @@ namespace GenerationSystem
             _spawnPosition = Camera.main.transform;
             
             _objectPool = new ObjectPool<T>(CreateObject);
-            LoopGeneration();
         }
         
+        public void EnableGeneration()
+        {
+            _generationTask = LoopGeneration();
+        }
+
+        public void DisableGeneration() 
+        {
+            if (_generationTask.Status == UniTaskStatus.Pending)
+                _generationTask.Forget();
+        }
+
         private async UniTask LoopGeneration()
         {
             while (true)

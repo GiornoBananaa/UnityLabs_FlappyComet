@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Zenject;
+using Core;
 
 namespace PointSystem
 {

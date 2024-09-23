@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using Zenject;
+using VContainer.Unity;
+using Core;
 using Object = UnityEngine.Object;
 
 namespace ObstacleSystem
 {
-    public class ObstacleFactory : IFactory<Obstacle>
+    public class ObstacleFactory :  IFactory<Obstacle>
     {
         private readonly ObstacleMovementPreset[] _movementPresets;
         private readonly Obstacle _prefab;
