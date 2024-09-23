@@ -1,3 +1,4 @@
+using DataLoadingSystem;
 using UnityEngine;
 
 namespace CometSystem
@@ -8,11 +9,12 @@ namespace CometSystem
         private readonly float _acceleration;
         private readonly float _maxVelocity;
 
-        public CometMovement(Rigidbody2D comet, CometDataSO cometData)
+        public CometMovement(Rigidbody2D comet, IRepository<ScriptableObject> dataRepository)
         {
+            CometDataSO data = dataRepository.GetItem<CometDataSO>()[0];
             _rigidBody = comet;
-            _acceleration = cometData.YAcceleration;
-            _maxVelocity = cometData.YMaxVelocity;
+            _acceleration = data.YAcceleration;
+            _maxVelocity = data.YMaxVelocity;
         }
 
         public void LiftComet()

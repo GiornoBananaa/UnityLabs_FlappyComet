@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
 using Core;
+using CometSystem;
+using DataLoadingSystem;
 
 namespace GenerationSystem
 {
@@ -23,10 +25,11 @@ namespace GenerationSystem
         private readonly float _lifeTime;
         private UniTask _generationTask;
 
-        public GameObjectGenerator(IFactory<T> factory, LevelGenerationDataSO levelGenerationData)
+        public GameObjectGenerator(IFactory<T> factory, IRepository<ScriptableObject> dataRepository)
         {
+            LevelGenerationDataSO data = dataRepository.GetItem<LevelGenerationDataSO>()[0];
             _factory = factory;
-            ObjectGenerationData objectGenerationData = levelGenerationData.ObjectGenerationDataByType[typeof(T)];
+            ObjectGenerationData objectGenerationData = data.ObjectGenerationDataByType[typeof(T)];
             _spawnTimeGap = objectGenerationData.SpawnTimeGap;
             _spawnTimeGapSpread = objectGenerationData.SpawnTimeGapSpread;
             _lifeTime = objectGenerationData.LifeTime;

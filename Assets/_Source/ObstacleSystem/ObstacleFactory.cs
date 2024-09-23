@@ -2,6 +2,8 @@
 using VContainer.Unity;
 using Core;
 using Object = UnityEngine.Object;
+using CometSystem;
+using DataLoadingSystem;
 
 namespace ObstacleSystem
 {
@@ -10,10 +12,11 @@ namespace ObstacleSystem
         private readonly ObstacleMovementPreset[] _movementPresets;
         private readonly Obstacle _prefab;
         
-        public ObstacleFactory(ObstacleDataSO obstacleData)
+        public ObstacleFactory(IRepository<ScriptableObject> dataRepository)
         {
-            _prefab = obstacleData.Prefab;
-            _movementPresets = obstacleData.MovementPresets;
+            ObstacleDataSO data = dataRepository.GetItem<ObstacleDataSO>()[0];
+            _prefab = data.Prefab;
+            _movementPresets = data.MovementPresets;
         }
         
         public Obstacle Create()

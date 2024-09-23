@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Core;
+using DataLoadingSystem;
 
 namespace PointSystem
 {
@@ -7,9 +8,9 @@ namespace PointSystem
     {
         private readonly Point _prefab;
 
-        public PointFactory(PointDataSO pointData)
+        public PointFactory(IRepository<ScriptableObject> dataRepository)
         {
-            _prefab = pointData.Prefab;
+            _prefab = dataRepository.GetItem<PointDataSO>()[0].Prefab;
         }
 
         public Point Create()

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DataLoadingSystem;
+using ObstacleSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -11,13 +13,14 @@ namespace CometSystem
         private readonly Transform _cometTransform;
         private readonly float _suckForce;
         
-        public PointSucker(TriggerDetector triggerDetector, CometDataSO cometData)
+        public PointSucker(TriggerDetector triggerDetector, IRepository<ScriptableObject> dataRepository)
         {
+            CometDataSO data = dataRepository.GetItem<CometDataSO>()[0];
             _triggerDetector = triggerDetector;
             _cometTransform = triggerDetector.transform;
-            _triggerDetector.Subscribe(this, cometData.PointLayers);
+            _triggerDetector.Subscribe(this, data.PointLayers);
             _points = new List<(Transform, float)>();
-            _suckForce = cometData.PointSuckForce;
+            _suckForce = data.PointSuckForce;
         }
         
         public void Tick()

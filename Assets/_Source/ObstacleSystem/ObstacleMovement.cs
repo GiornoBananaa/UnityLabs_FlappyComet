@@ -43,7 +43,7 @@ namespace ObstacleSystem
         {
             Vector3 pathPoint = _startPosition + _path[_pathIndex];
             
-            _moveTween = _transform.DOMove(pathPoint, Vector3.Distance(_transform.position, _startPosition) / _speed).SetEase(Ease.Linear).OnComplete(MoveToPathPoint);
+            _moveTween = _transform.DOMove(pathPoint, Vector3.Distance(_transform.position, pathPoint) / _speed).SetEase(Ease.Linear).OnComplete(MoveToPathPoint);
             _pathIndex++;
             if (_pathIndex >= _path.Length)
                 _pathIndex = 0;

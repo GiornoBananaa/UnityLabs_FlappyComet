@@ -1,4 +1,6 @@
 using CometSystem;
+using DataLoadingSystem;
+using PointSystem;
 using UnityEngine;
 using VContainer;
 
@@ -10,9 +12,9 @@ namespace CameraSystem
         private float _speed;
 
         [Inject]
-        private void Construct(CometDataSO cometDataSO)
+        private void Construct(IRepository<ScriptableObject> dataRepository)
         {
-            _speed = cometDataSO.XSpeed;
+            _speed = dataRepository.GetItem<CometDataSO>()[0].XSpeed;
         }
 
         private void Start()

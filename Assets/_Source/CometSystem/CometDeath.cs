@@ -1,4 +1,5 @@
 using Core;
+using DataLoadingSystem;
 using UnityEngine;
 
 namespace CometSystem
@@ -8,10 +9,11 @@ namespace CometSystem
         private readonly CollisionDetector _collisionDetector;
         private readonly Game _game;
 
-        public CometDeath(CollisionDetector collisionDetector, Game game, CometDataSO cometData)
+        public CometDeath(CollisionDetector collisionDetector, Game game, IRepository<ScriptableObject> dataRepository)
         {
+            CometDataSO data = dataRepository.GetItem<CometDataSO>()[0];
             _collisionDetector = collisionDetector;
-            _collisionDetector.Subscribe(this, cometData.DeathLayers);
+            _collisionDetector.Subscribe(this, data.DeathLayers);
             _game = game;
         }
 

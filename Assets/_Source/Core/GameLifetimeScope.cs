@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
 using VContainer;
+using DataLoadingSystem;
 
 namespace Core
 {
@@ -29,25 +30,26 @@ namespace Core
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<ActorPresenter>();
+            builder.RegisterEntryPoint<Bootstrapper>();
 
-            //SO
-            CometDataSO cometData = Resources.Load<CometDataSO>(COMET_DATA_PATH);
-            builder.RegisterInstance<CometDataSO>(cometData);
-            LevelGenerationDataSO levelGenerationData = Resources.Load<LevelGenerationDataSO>(LEVEL_GENERATION_DATA_PATH);
-            builder.RegisterInstance<LevelGenerationDataSO>(levelGenerationData);
-            ObstacleDataSO obstacleData = Resources.Load<ObstacleDataSO>(OBSTACLE_DATA_PATH);
-            builder.RegisterInstance<ObstacleDataSO>(obstacleData);
-            PointDataSO pointData = Resources.Load<PointDataSO>(POINT_DATA_PATH);
-            builder.RegisterInstance<PointDataSO>(pointData);
+            #region DataLoad
+            IResourceLoader resourceLoader = new ResourceLoader();
+            IRepository<ScriptableObject> dataRepository = new DataRepository<ScriptableObject>();
 
-            //Input
+            LoadResources(resourceLoader, dataRepository);
+
+            builder.RegisterInstance<IRepository<ScriptableObject>>(dataRepository);
+            #endregion
+
+            #region Input
             builder.RegisterComponent<InputListener>(_inputListener);
+            #endregion
 
-            //Core
+            #region Core
             builder.Register<Game>(Lifetime.Singleton);
+            #endregion
 
-            //Comet
+            #region Comet
             builder.RegisterComponent<TriggerDetector>(_triggerDetector);
             builder.RegisterComponent<CollisionDetector>(_collisionDetector);
             builder.RegisterComponent<CameraMovement>(_cameraMovement);
@@ -55,19 +57,35 @@ namespace Core
             builder.Register<PointSucker>(Lifetime.Singleton);
             builder.Register<ITickable, PointSucker>(Lifetime.Singleton);
             builder.Register<CometDeath>(Lifetime.Singleton);
+            #endregion
 
-            //Obstacle
+            #region Obstacle
             builder.Register<IFactory<Obstacle>, ObstacleFactory>(Lifetime.Singleton);
+            #endregion
 
-            //Point
+            #region Point
             builder.Register<IFactory<Point>, PointFactory>(Lifetime.Singleton);
             builder.RegisterComponent<PointView>(_pointView);
             builder.Register<PointCollector>(Lifetime.Singleton);
             builder.Register<PointContainer>(Lifetime.Singleton);
+            #endregion
 
-            //Generation
+            #region Generation
             builder.Register<IObjectGenerator, GameObjectGenerator<Obstacle>>(Lifetime.Singleton);
             builder.Register<IObjectGenerator, GameObjectGenerator<Point>>(Lifetime.Singleton);
+            #endregion
+        }
+
+        private void LoadResources(IResourceLoader resourceLoader, IRepository<ScriptableObject> dataRepository)
+        {
+            resourceLoader.LoadResource(PathData.LEVEL_GENERATION_DATA_PATH,
+              typeof(LevelGenerationDataSO), dataRepository);
+            resourceLoader.LoadResource(PathData.POINT_DATA_PATH,
+              typeof(PointDataSO), dataRepository);
+            resourceLoader.LoadResource(PathData.COMET_DATA_PATH,
+              typeof(CometDataSO), dataRepository);
+            resourceLoader.LoadResource(PathData.OBSTACLE_DATA_PATH,
+              typeof(ObstacleDataSO), dataRepository);
         }
     }
 }
